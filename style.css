@@ -1,0 +1,786 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #36393f;
+    color: #dcddde;
+    overflow: hidden;
+}
+
+.hidden {
+    display: none !important;
+}
+
+
+/* Modal Styles */
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #36393f;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.24);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #fff;
+}
+
+
+/* Auth Modal */
+
+#authModal .modal-content {
+    text-align: center;
+}
+
+#authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+#authForm input {
+    padding: 12px;
+    border: 1px solid #40444b;
+    border-radius: 4px;
+    background-color: #40444b;
+    color: #dcddde;
+    font-size: 16px;
+}
+
+#authForm input:focus {
+    outline: none;
+    border-color: #5865f2;
+}
+
+#authSubmit {
+    background-color: #5865f2;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+#authSubmit:hover {
+    background-color: #4752c4;
+}
+
+#switchAuth {
+    color: #5865f2;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+
+/* Main App Layout */
+
+#app {
+    display: flex;
+    height: 100vh;
+}
+
+
+/* Sidebar */
+
+.sidebar {
+    width: 240px;
+    background-color: #2f3136;
+    display: flex;
+    flex-direction: column;
+}
+
+.server-info {
+    padding: 15px;
+    border-bottom: 1px solid #40444b;
+}
+
+.server-info h3 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.user-info img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.user-status {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-left: auto;
+}
+
+.user-status.online {
+    background-color: #3ba55d;
+}
+
+.user-status.away {
+    background-color: #faa81a;
+}
+
+.user-status.busy {
+    background-color: #ed4245;
+}
+
+
+/* Channels */
+
+.channels-section,
+.voice-section {
+    padding: 15px 10px;
+}
+
+.channel-category {
+    margin-bottom: 8px;
+}
+
+.channel-category h4 {
+    font-size: 12px;
+    color: #8e9297;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.channel,
+.voice-channel {
+    display: flex;
+    align-items: center;
+    padding: 6px 8px;
+    margin: 2px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #96989d;
+    transition: all 0.15s ease;
+    position: relative;
+}
+
+.channel:hover,
+.voice-channel:hover {
+    background-color: #40444b;
+    color: #dcddde;
+}
+
+.channel.active {
+    background-color: #5865f2;
+    color: #fff;
+}
+
+.channel i,
+.voice-channel i {
+    margin-right: 6px;
+    width: 16px;
+}
+
+.notification-badge {
+    background-color: #ed4245;
+    color: #fff;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 12px;
+    margin-left: auto;
+    min-width: 16px;
+    text-align: center;
+}
+
+
+/* Main Content */
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #36393f;
+}
+
+
+/* Header */
+
+.header {
+    height: 60px;
+    background-color: #36393f;
+    border-bottom: 1px solid #40444b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}
+
+.channel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.channel-header i {
+    color: #8e9297;
+}
+
+.channel-topic {
+    color: #72767d;
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    color: #b9bbbe;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.icon-btn:hover {
+    background-color: #40444b;
+    color: #dcddde;
+}
+
+
+/* Messages Container */
+
+.messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.message {
+    display: flex;
+    margin-bottom: 20px;
+    padding: 2px 0;
+}
+
+.message:hover {
+    background-color: rgba(4, 4, 5, 0.07);
+}
+
+.message-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 16px;
+}
+
+.message-content {
+    flex: 1;
+}
+
+.message-header {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+
+.message-author {
+    font-weight: 500;
+    color: #fff;
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.message-timestamp {
+    font-size: 12px;
+    color: #72767d;
+}
+
+.message-text {
+    color: #dcddde;
+    line-height: 1.375;
+    word-wrap: break-word;
+}
+
+.message-text.command {
+    color: #5865f2;
+    font-family: 'Courier New', monospace;
+}
+
+.message-text.system {
+    color: #faa81a;
+    font-style: italic;
+}
+
+.message-reactions {
+    display: flex;
+    gap: 4px;
+    margin-top: 8px;
+}
+
+.reaction {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 2px 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.reaction:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.reaction.reacted {
+    background-color: rgba(88, 101, 242, 0.3);
+    border-color: #5865f2;
+}
+
+
+/* Message Input */
+
+.message-input-container {
+    padding: 20px;
+}
+
+.typing-indicator {
+    padding: 8px 0;
+    color: #72767d;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.message-input {
+    display: flex;
+    align-items: center;
+    background-color: #40444b;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.file-upload-btn {
+    background: none;
+    border: none;
+    color: #b9bbbe;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-right: 8px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.file-upload-btn:hover {
+    background-color: #36393f;
+    color: #dcddde;
+}
+
+#messageInput {
+    flex: 1;
+    background: none;
+    border: none;
+    color: #dcddde;
+    font-size: 16px;
+    outline: none;
+}
+
+#messageInput::placeholder {
+    color: #72767d;
+}
+
+.send-btn {
+    background: none;
+    border: none;
+    color: #b9bbbe;
+    cursor: pointer;
+    padding: 4px 8px;
+    margin-left: 8px;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+}
+
+.send-btn:hover {
+    background-color: #36393f;
+    color: #dcddde;
+}
+
+
+/* Right Sidebar */
+
+.right-sidebar {
+    width: 240px;
+    background-color: #2f3136;
+    padding: 20px;
+    border-left: 1px solid #40444b;
+}
+
+.right-sidebar h4 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.online-users {
+    margin-bottom: 30px;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 4px 8px;
+    margin: 2px 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.user-item:hover {
+    background-color: #40444b;
+}
+
+.user-item img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.user-item .user-status {
+    margin-left: auto;
+}
+
+.study-stats .stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    color: #b9bbbe;
+    font-size: 14px;
+}
+
+.achievements {
+    margin-top: 20px;
+}
+
+.badge {
+    display: inline-block;
+    background-color: #5865f2;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    margin: 2px;
+}
+
+.badge.gold {
+    background-color: #ffd700;
+    color: #000;
+}
+
+.badge.silver {
+    background-color: #c0c0c0;
+    color: #000;
+}
+
+.badge.bronze {
+    background-color: #cd7f32;
+}
+
+
+/* Timer Modal */
+
+.timer-display {
+    text-align: center;
+}
+
+#timerTime {
+    font-size: 48px;
+    font-weight: bold;
+    color: #5865f2;
+    margin: 20px 0;
+    font-family: 'Courier New', monospace;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.timer-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.timer-btn.start {
+    background-color: #3ba55d;
+    color: #fff;
+}
+
+.timer-btn.pause {
+    background-color: #faa81a;
+    color: #fff;
+}
+
+.timer-btn.end {
+    background-color: #ed4245;
+    color: #fff;
+}
+
+.timer-btn:hover {
+    opacity: 0.8;
+}
+
+
+/* Goals Modal */
+
+.goal-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.goal-input input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #40444b;
+    border-radius: 4px;
+    background-color: #40444b;
+    color: #dcddde;
+}
+
+#setGoalBtn {
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    background-color: #40444b;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #3ba55d;
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+#progressText {
+    color: #b9bbbe;
+    font-size: 14px;
+}
+
+
+/* Leaderboard */
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #40444b;
+    border-radius: 4px;
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+    margin-right: 15px;
+    width: 30px;
+}
+
+.leaderboard-rank.first {
+    color: #ffd700;
+}
+
+.leaderboard-rank.second {
+    color: #c0c0c0;
+}
+
+.leaderboard-rank.third {
+    color: #cd7f32;
+}
+
+.leaderboard-user {
+    flex: 1;
+}
+
+.leaderboard-time {
+    color: #5865f2;
+    font-weight: bold;
+}
+
+
+/* Responsive Design */
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    .right-sidebar {
+        display: none;
+    }
+    .main-content {
+        flex: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .sidebar {
+        width: 60px;
+    }
+    .sidebar .channel span,
+    .sidebar .voice-channel span,
+    .sidebar h3,
+    .sidebar h4 {
+        display: none;
+    }
+    .user-info span {
+        display: none;
+    }
+}
+
+
+/* Scrollbar Styling */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2f3136;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #5865f2;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #4752c4;
+}
+
+
+/* Animation for new messages */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.message.new {
+    animation: slideIn 0.3s ease;
+}
+
+
+/* Ping highlighting */
+
+.message-text .ping {
+    background-color: rgba(88, 101, 242, 0.3);
+    color: #5865f2;
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+
+/* File upload preview */
+
+.file-preview {
+    background-color: #40444b;
+    border-radius: 4px;
+    padding: 8px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-preview i {
+    color: #5865f2;
+}
+
+.file-info {
+    flex: 1;
+}
+
+.file-name {
+    font-weight: 500;
+    color: #dcddde;
+}
+
+.file-size {
+    font-size: 12px;
+    color: #72767d;
+}
+
+.download-btn {
+    background-color: #5865f2;
+    color: #fff;
+    border: none;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.download-btn:hover {
+    background-color: #4752c4;
+}

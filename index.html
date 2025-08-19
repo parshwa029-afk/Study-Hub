@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudySync - Discord for Students</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Login/Register Modal -->
+    <div id="authModal" class="modal">
+        <div class="modal-content">
+            <h2 id="authTitle">Welcome to StudySync</h2>
+            <form id="authForm">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="authSubmit">Sign Up</button>
+            </form>
+            <p id="authSwitch">Already have an account? <span id="switchAuth">Login</span></p>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="app" class="hidden">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="server-info">
+                <h3><i class="fas fa-graduation-cap"></i> StudySync</h3>
+                <div class="user-info">
+                    <img id="userAvatar" src="https://via.placeholder.com/32" alt="Avatar">
+                    <span id="currentUser">Username</span>
+                    <div class="user-status online"></div>
+                </div>
+            </div>
+
+            <!-- Channels -->
+            <div class="channels-section">
+                <div class="channel-category">
+                    <h4><i class="fas fa-chevron-down"></i> STUDY CHANNELS</h4>
+                </div>
+                <div class="channel active" data-channel="general">
+                    <i class="fas fa-hashtag"></i> general
+                    <span class="notification-badge hidden">0</span>
+                </div>
+                <div class="channel" data-channel="doubts">
+                    <i class="fas fa-question-circle"></i> doubts
+                    <span class="notification-badge hidden">0</span>
+                </div>
+                <div class="channel" data-channel="resources">
+                    <i class="fas fa-book"></i> resources
+                    <span class="notification-badge hidden">0</span>
+                </div>
+                <div class="channel" data-channel="exam-papers">
+                    <i class="fas fa-file-alt"></i> exam-papers
+                    <span class="notification-badge hidden">0</span>
+                </div>
+                <div class="channel" data-channel="study-videos">
+                    <i class="fas fa-video"></i> study-videos
+                    <span class="notification-badge hidden">0</span>
+                </div>
+                <div class="channel" data-channel="notes">
+                    <i class="fas fa-sticky-note"></i> notes
+                    <span class="notification-badge hidden">0</span>
+                </div>
+            </div>
+
+            <!-- Voice Channels -->
+            <div class="voice-section">
+                <div class="channel-category">
+                    <h4><i class="fas fa-chevron-down"></i> STUDY ROOMS</h4>
+                </div>
+                <div class="voice-channel">
+                    <i class="fas fa-volume-up"></i> Focus Room
+                </div>
+                <div class="voice-channel">
+                    <i class="fas fa-volume-up"></i> Group Study
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="channel-header">
+                    <i class="fas fa-hashtag"></i>
+                    <span id="currentChannelName">general</span>
+                    <span class="channel-topic">Welcome to StudySync! Use /help to see available commands</span>
+                </div>
+                <div class="header-actions">
+                    <button class="icon-btn" id="studyTimerBtn" title="Study Timer">
+                        <i class="fas fa-clock"></i>
+                    </button>
+                    <button class="icon-btn" id="goalsBtn" title="Study Goals">
+                        <i class="fas fa-target"></i>
+                    </button>
+                    <button class="icon-btn" id="leaderboardBtn" title="Leaderboard">
+                        <i class="fas fa-trophy"></i>
+                    </button>
+                    <button class="icon-btn" id="settingsBtn" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Messages Container -->
+            <div class="messages-container" id="messagesContainer">
+                <!-- Messages will be dynamically added here -->
+            </div>
+
+            <!-- Message Input -->
+            <div class="message-input-container">
+                <div class="typing-indicator hidden" id="typingIndicator">
+                    <span>Someone is typing...</span>
+                </div>
+                <div class="message-input">
+                    <button class="file-upload-btn" title="Upload File">
+                        <i class="fas fa-paperclip"></i>
+                        <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg">
+                    </button>
+                    <input type="text" id="messageInput" placeholder="Message #general" autocomplete="off">
+                    <button id="sendBtn" class="send-btn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Sidebar -->
+        <div class="right-sidebar">
+            <div class="online-users">
+                <h4>Online Users</h4>
+                <div id="onlineUsersList">
+                    <!-- Online users will be listed here -->
+                </div>
+            </div>
+            <div class="study-stats">
+                <h4>Today's Study Stats</h4>
+                <div class="stat-item">
+                    <span>Your Study Time:</span>
+                    <span id="userStudyTime">0h 0m</span>
+                </div>
+                <div class="stat-item">
+                    <span>Messages Sent:</span>
+                    <span id="messagesSent">0</span>
+                </div>
+                <div class="achievements">
+                    <h4>Your Badges</h4>
+                    <div id="userBadges">
+                        <!-- Badges will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div id="studyTimerModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Study Timer</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="timer-display">
+                <div id="timerTime">00:00:00</div>
+                <div class="timer-controls">
+                    <button id="startStudyBtn" class="timer-btn start">Start Study</button>
+                    <button id="pauseStudyBtn" class="timer-btn pause hidden">Pause</button>
+                    <button id="endStudyBtn" class="timer-btn end hidden">End Study</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="goalsModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Study Goals</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="goals-content">
+                <div class="goal-input">
+                    <input type="number" id="dailyGoal" placeholder="Daily goal (hours)">
+                    <button id="setGoalBtn">Set Goal</button>
+                </div>
+                <div class="goal-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span id="progressText">0% complete</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="leaderboardModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Study Leaderboard</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div id="leaderboardContent">
+                <!-- Leaderboard will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Scripts -->
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
